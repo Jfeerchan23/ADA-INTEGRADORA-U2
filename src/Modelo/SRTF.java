@@ -13,8 +13,9 @@ import static Modelo.Main.listaProcesos;
  * @author Amaya
  */
 public class SRTF {
-    public static ArrayList<Proceso> procesos = listaProcesos;
-    private static ArrayList<Proceso> colaProcesos = null;
+    public static ArrayList<Proceso> process = listaProcesos;
+    private static ArrayList<Proceso> queueProcess = new ArrayList<Proceso>();
+    private static Proceso current = null;
     private static int totalCountTime = totalCountTime();
     
     public static void SRTF(){
@@ -25,8 +26,8 @@ public class SRTF {
     
     public static void printTable(){
         System.out.println("Proceso \tDuracion \tLlegada \tPrioridad \ttEspera \ttTotal");
-        for (int i=0; i < procesos.size(); i++ ){
-            System.out.println(procesos.get(i));    
+        for (int i=0; i < process.size(); i++ ){
+            System.out.println(process.get(i));    
         }
     }
     
@@ -34,35 +35,55 @@ public class SRTF {
         for(int i= 0; i< totalCountTime; i++){
             int arrived = isArrived(i);
             if(arrived != -1)
-                System.out.println(arrived);
-                //despachador(arrived);
-            
-            if(colaProcesos != null){
+                despachador(arrived);
+            if(!queueProcess.isEmpty()){
                 System.out.println("Actualizamos contadores totales y espera, respectivamente");
+                System.out.println("SI está en cola se suma Tespera SINO a TTOTAL");
+                System.out.println("Le podemos ir sumando de 1 en 1, o desde despachador crear una función que devuelva un boolean y haya un contador");
+                System.out.println("que se le añada a su respectivo campo (Tespera o Ttotal) si hubiera un cambio entre current y new process");
             }
         }
     }
     
     private static int isArrived(int time){
-        for(int i=0; i<procesos.size(); i++){
-            if(time ==  procesos.get(i).getLlegada()){
+        for(int i=0; i<process.size(); i++){
+            if(time ==  process.get(i).getLlegada()){
                 return i;
             }
         }
         return -1;
     }
     
-    
+    private static void despachador(int indexNewProcess){ //Compare (current vs new) process
+        if(queueProcess.isEmpty()){
+            //Added to Queue if empty
+            queueProcess.add(process.get(indexNewProcess));
+            //Update current with first process
+            current = process.get(indexNewProcess);
+        } else {
+            //For current.duration and newProcess.duration, compare and execute SRTF 
+            if(current.getDuracion() > process.get(indexNewProcess).getDuracion() ){
+                System.out.println("Cambio de current");
+                System.out.println("Old Process: "+current.getProceso()+" New Process: "+process.get(indexNewProcess).getProceso());
+            } else {
+                //Add to queue. It will execute after currente finish
+                queueProcess.add(process.get(indexNewProcess));
+            }
+        }
+    }
     
     private static int totalCountTime(){
         int cont = 0;
-        for (int i=0; i < procesos.size(); i++ ){
+        for (int i=0; i < process.size(); i++ ){
             //Suma total de las duraciones de los procesos
-            cont += procesos.get(i).getDuracion();
+            cont += process.get(i).getDuracion();
         }
         cont += 1;
         return cont;
     }
     
+    /*
+    
+    */
     
 }
