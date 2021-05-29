@@ -5,8 +5,8 @@
  */
 package Modelo;
 
-import static Modelo.Main.original;
 import java.util.ArrayList;
+import static Modelo.Main.listaProcesos;
 
 /**
  *
@@ -22,9 +22,9 @@ System.out.println("Proceso \tDuracion \tLlegada \tPrioridad \ttEspera \ttTotal"
 }
 public static int maximaLlegada(){
   int x=0;
-  for(int i=0;i<original.size();i++){
-      if(x<original.get(i).getLlegada()){
-          x=original.get(i).getLlegada();
+  for(int i=0;i<listaProcesos.size();i++){
+      if(x<listaProcesos.get(i).getLlegada()){
+          x=listaProcesos.get(i).getLlegada();
       }
   }
     return x;
@@ -81,7 +81,7 @@ public static int buscar(ArrayList<Proceso> temp, int x, ArrayList<Proceso> PorP
   return x;
 }
 public static void PRIORIDAD(){
-  ArrayList<Proceso> lista = original;
+  ArrayList<Proceso> lista = listaProcesos;
  ArrayList<Proceso> PorPrioridad = new ArrayList();
  ArrayList<Proceso> temporal =  new ArrayList();
    int i=0;

@@ -19,13 +19,13 @@ public class Proceso {
    private int tEspera;
    private  int tTotal;
 
-    public Proceso(String proceso, int duracion, int llegada, int prioridad, int tEspera, int tTotal) {
+    public Proceso(String proceso, int duracion, int llegada, int prioridad) {
         this.proceso = proceso;
         this.duracion = duracion;
         this.llegada = llegada;
         this.prioridad = prioridad;
-        this.tEspera = tEspera;
-        this.tTotal = tTotal;
+        this.tEspera = 0;
+        this.tTotal = 0;
     }
 
    
@@ -34,7 +34,6 @@ public class Proceso {
     public String getProceso() {
         return proceso;
     }
-
     public void setProceso(String proceso) {
         this.proceso = proceso;
     }
@@ -42,7 +41,6 @@ public class Proceso {
     public int getDuracion() {
         return duracion;
     }
-
     public void setDuracion(int duracion) {
         this.duracion = duracion;
     }
@@ -50,7 +48,6 @@ public class Proceso {
     public int getLlegada() {
         return llegada;
     }
-
     public void setLlegada(int llegada) {
         this.llegada = llegada;
     }
@@ -58,7 +55,6 @@ public class Proceso {
     public int getPrioridad() {
         return prioridad;
     }
-
     public void setPrioridad(int prioridad) {
         this.prioridad = prioridad;
     }
@@ -66,7 +62,6 @@ public class Proceso {
     public int gettEspera() {
         return tEspera;
     }
-
     public void settEspera(int tEspera) {
         this.tEspera = tEspera;
     }
@@ -74,7 +69,6 @@ public class Proceso {
     public int gettTotal() {
         return tTotal;
     }
-
     public void settTotal(int tTotal) {
         this.tTotal = tTotal;
     }
