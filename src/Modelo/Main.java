@@ -6,26 +6,25 @@
 package Modelo;
 
 import static Modelo.Prioridad.PRIORIDAD;
+import static Modelo.SRTF.SRTF;
 import java.util.ArrayList;
 public class Main {
 
-    /**
-     * @param args the command line arguments
-     */
-     
     static ArrayList<Proceso> listaProcesos = new ArrayList();
+    
     public static void main(String[] args) {
-        // TODO code application logic here
         inicializar();
         
-        //Planificación por prioridad
-        PRIORIDAD();
-    
+        //Algoritmo Planificación por prioridad
+        //PRIORIDAD();
+        //Algoritmo SRTF (Shortest Remaining Time First)
+        SRTF();
          
          
      
     }
 private static void inicializar(){
+    //(#Proceso, Duración, Llegada, Prioridad)
     listaProcesos.add(new Proceso("P1",14,8,5));
     listaProcesos.add(new Proceso("P2",22,12,2));
     listaProcesos.add(new Proceso("P3",8,0,8));
