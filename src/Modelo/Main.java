@@ -5,7 +5,9 @@
  */
 package Modelo;
 
-import static Modelo.Prioridad.PRIORIDAD;
+
+import static Modelo.Prioridad.planificacionPrioridad;
+import static Modelo.Prioridad.planificacionPrioridadDerecho;
 import java.util.ArrayList;
 public class Main {
 
@@ -18,9 +20,10 @@ public class Main {
         // TODO code application logic here
         inicializar();
         
-        //Planificación por prioridad
-        PRIORIDAD();
-    
+   //Planificación por prioridad 
+        planificacionPrioridad();
+         //Planificación por prioridad con derecho preferente
+       planificacionPrioridadDerecho();
          
          
      
