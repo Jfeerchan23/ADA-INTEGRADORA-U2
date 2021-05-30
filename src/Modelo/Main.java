@@ -15,14 +15,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-
+    //LISTA madre/origen/base SE REINICIA CON CADA ITERACIÖN DEL SWITCH
     static ArrayList<Proceso> listaProcesos = new ArrayList();
     
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int option = 0;
         inicializar();
-
+        
         do{
             System.out.println("¿Qué función desea ejecutar?");
             System.out.println("[0]: Salir \n[1]: FCFS \n[2]: SJF \n[3]: SRTF \n[4]: PRIORIDAD \n[5]: RR \n[6]: SRTF con Derecho Preferente \n[7]: PRIORIDAD con Derecho Preferente");
@@ -38,7 +38,7 @@ public class Main {
                     break;
                 case 3:
                     //Algoritmo SRTF (Shortest Remaining Time First)
-                    SRTF(); 
+                    SRTF();
                     break; 
                 case 4:
                     //Planificación por prioridad 
@@ -55,6 +55,8 @@ public class Main {
                     planificacionPrioridadDerecho();
                     break; 
             }
+            //PUEDEN HACER REFERENCIA A ESTA MISMA LISTA "listaProcesos"; SE REINICIA
+            resetList();
         } while (option != 0);
     }
     
@@ -69,9 +71,15 @@ public class Main {
         listaProcesos.add(new Proceso("P7",12,20,4));
         listaProcesos.add(new Proceso("P8",18,22,8));
     }
-
-  
-  
-  
-  
+    
+    private static void resetList(){
+        listaProcesos.get(0).setAll("P1",14,8,5);
+        listaProcesos.get(1).setAll("P2",22,12,2);
+        listaProcesos.get(2).setAll("P3",8,0,8);
+        listaProcesos.get(3).setAll("P4",16,6,5);
+        listaProcesos.get(4).setAll("P5",26,24,7);
+        listaProcesos.get(5).setAll("P6",24,16,9);
+        listaProcesos.get(6).setAll("P7",12,20,4);
+        listaProcesos.get(7).setAll("P8",18,22,8);
+    }
 }
