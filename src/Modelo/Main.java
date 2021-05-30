@@ -30,6 +30,7 @@ public class Main {
             switch (option) {
                 case 1:
                     System.out.println("FCFS");
+                    FCFS.planificacionFCFS();
                     break;
                 case 2:
                     System.out.println("SJF");
