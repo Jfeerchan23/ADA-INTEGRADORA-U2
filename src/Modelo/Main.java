@@ -10,6 +10,8 @@ import static Modelo.Prioridad.planificacionPrioridadDerecho;
 import static Modelo.SRTF.SRTF;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -32,6 +34,7 @@ public class Main {
                     break;    
                 case 2:
                     System.out.println("SJF");
+                    SJF.calculateShortestJobFirst(new ArrayList<>(listaProcesos));
                     break;
                 case 3:
                     //Algoritmo SRTF (Shortest Remaining Time First)
