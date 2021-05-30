@@ -21,7 +21,8 @@ public class SRTF {
     
     public static void SRTF(){
         clock(); //All time needed to execute all duration time process
-        //Sumar ESPERA y TOTAL
+        printTable();
+        
         printTable();
     }
     
@@ -87,8 +88,10 @@ public class SRTF {
             int lessDuration = -1;
             for (Proceso pro : queueProcess) {
                 //-1 as wildcard OR (duration - totalTime)  {totalTime == timeThatHadHadUsedTheProcess }
-                if(lessDuration == -1 || (pro.getDuracion() - pro.gettTotal()) < lessDuration)
+                if(lessDuration == -1 || (pro.getDuracion() - pro.gettTotal()) < lessDuration){
+                    lessDuration = pro.getDuracion();
                     current = pro;
+                }
                 System.out.println(pro);
             }
             
@@ -105,11 +108,11 @@ public class SRTF {
     private static int findIndex(){
         for(int i=0; i<queueProcess.size(); i++){
             System.out.println("i: "+i);
-            if(queueProcess.get(i) == current)
+            if(queueProcess.get(i) == current){
                 System.out.println("Returned: "+i);
-              return i;  
+                return i;
+            }
         }
-        System.out.println("Basura return");
         return -1;
     }
     
@@ -118,11 +121,11 @@ public class SRTF {
         for (int i = 0; i<queueProcess.size(); i++){
             countComodin = queueProcess.get(i).gettTotal();
             if(queueProcess.get(i) ==  current){
-                System.out.println("Suma a TOTAL de current");
+                System.out.println("Suma a TOTAL de current " + queueProcess.get(i).getProceso());
                 queueProcess.get(i).settTotal(countComodin + durationCount);
                 System.out.println(countComodin + durationCount);
             }else{
-                System.out.println("Suma Espera de los demás");
+                System.out.println("Suma Espera de los demás " + queueProcess.get(i).getProceso() );
                 int iPosArrived = queueProcess.get(i).getLlegada();
                 int waitTime = (iPosTime - iPosArrived) - countComodin;
                 queueProcess.get(i).settEspera(waitTime);
