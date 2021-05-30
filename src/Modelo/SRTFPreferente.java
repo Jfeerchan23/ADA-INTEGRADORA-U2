@@ -12,14 +12,14 @@ import static Modelo.Main.listaProcesos;
  *
  * @author Amaya
  */
-public class SRTF {
+public class SRTFPreferente {
     public static ArrayList<Proceso> process = listaProcesos;
     private static ArrayList<Proceso> queueProcess;
     private static Proceso current = null;
     private static final int totalCountTime = totalCountTime();
     private static int durationCount;
     
-    public static void SRTF(){
+    public static void SRTFPreferente(){
         queueProcess = new ArrayList<>();
         clock(); //All time needed to execute all duration time process
         //printTable(false);
@@ -28,13 +28,11 @@ public class SRTF {
     }
     
     private static void clock(){
-        //System.out.println(totalCountTime);
         //Saber si hubo cambió y asignar valores de contador comodín
         boolean change = false;
         durationCount = 0;
         
         for(int i= 0; i< totalCountTime; i++){
-            //System.out.println("TIEMPO: " +i);
             int arrived = isArrived(i);
             if(arrived != -1) // -1: not found; other should be the index
                 change = despachador(arrived); //TRUE: current = newProcess; FALSE: current = Still oldProcess
@@ -42,58 +40,45 @@ public class SRTF {
                 boolean finished = isFinished(durationCount);
                 if(change || finished){ //change || some process has already finished
                     updateCounts(i);
-                    //System.out.println(durationCount);
                     //Se añade a su respectivo campo (Tespera o Ttotal). Por cambio o finalización
-                    if(finished){
-                        //System.out.println("Buscar nuevo proceso más chico()");
+                    if(finished)
                         newProcess(-1);
-                    } else{
-                        //System.out.println("Cambio de current desde indice: " + arrived);
+                    else
                         newProcess(arrived);
-                    }
+                    
                     //Reset values
                     durationCount = 0;
                     change = false;
                 }
-                //System.out.println("Contador: " + durationCount);
                 durationCount++;
-                /*
-                System.out.println("-------- Current ------------------------------------");
-                System.out.println("Proceso \tDuracion \tLlegada \tPrioridad \ttEspera \ttTotal");
-                System.out.println(current);
-                */
             }
-            //System.out.println("##########################################################################################");
         }
     }
     
     private static void newProcess(int idx){
-        /*
-        System.out.println("------------ Current BF change ------------------------------");
-        System.out.println("Proceso \tDuracion \tLlegada \tPrioridad \ttEspera \ttTotal");
-        System.out.println(current);
-        System.out.println("---------------- "+idx+" ------------------------------");
-        */
-        
         if (idx >= 0){ // idx != -1
             //We know that index is in QueueProcess, bc of isArrived() function
             current = process.get(idx);
-            /*for (Proceso pro : queueProcess) {
-                System.out.println(pro);
-            }*/
         } else {
             int idxToDelete = findIndex();
             queueProcess.remove(idxToDelete);
             int lessDuration = -1;
+            Proceso lessProcess = null;
             for (Proceso pro : queueProcess) {
                 //-1 as wildcard OR (duration - totalTime)  {totalTime == timeThatHadHadUsedTheProcess }
                 if(lessDuration == -1 || (pro.getDuracion() - pro.gettTotal()) < lessDuration){
+                    lessProcess = pro;
                     lessDuration = pro.getDuracion() - pro.gettTotal();
                     current = pro;
+                }else if((pro.getDuracion() - pro.gettTotal()) == lessDuration){
+                    if(pro.getPrioridad() > lessProcess.getPrioridad()){
+                        lessProcess = pro;
+                        lessDuration = pro.getDuracion() - pro.gettTotal();
+                        current = pro;
+                    }
+                        
                 }
-                //System.out.println(pro);
             }
-            
         }
     }
     
@@ -106,11 +91,8 @@ public class SRTF {
     
     private static int findIndex(){
         for(int i=0; i<queueProcess.size(); i++){
-            //System.out.println("i: "+i);
-            if(queueProcess.get(i) == current){
-                //System.out.println("Returned: "+i);
+            if(queueProcess.get(i) == current)
                 return i;
-            }
         }
         return -1;
     }
@@ -120,15 +102,11 @@ public class SRTF {
         for (int i = 0; i<queueProcess.size(); i++){
             countComodin = queueProcess.get(i).gettTotal();
             if(queueProcess.get(i) ==  current){
-                //System.out.println("Suma a TOTAL de current " + queueProcess.get(i).getProceso());
                 queueProcess.get(i).settTotal(countComodin + durationCount);
-                //System.out.println(countComodin + durationCount);
             }else{
-                //System.out.println("Suma Espera de los demás " + queueProcess.get(i).getProceso() );
                 int iPosArrived = queueProcess.get(i).getLlegada();
                 int waitTime = (iPosTime - iPosArrived) - countComodin;
                 queueProcess.get(i).settEspera(waitTime);
-                //System.out.println(waitTime);
             }
         }
     }
@@ -148,8 +126,6 @@ public class SRTF {
         if(queueProcess.isEmpty()){
             queueProcess.add(process.get(indexNewProcess)); //Added to Queue if empty
             current = process.get(indexNewProcess);         //Update current with first process
-            //System.out.println("###___ primero ___###");
-            //res = true;
         } else {
             //For current.duration and newProcess.duration, compare and execute SRTF 
             //durationCount just in case it hasn't had updated             >= To use "Con derecho preferente" NORMAL SERÍA >

@@ -8,6 +8,7 @@ package Modelo;
 import static Modelo.Prioridad.planificacionPrioridad;
 import static Modelo.Prioridad.planificacionPrioridadDerecho;
 import static Modelo.SRTF.SRTF;
+import static Modelo.SRTFPreferente.SRTFPreferente;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -45,7 +46,7 @@ public class Main {
                     System.out.println("RR");
                     break; 
                 case 6:
-                    System.out.println("SRTF con Derecho Preferente");
+                    SRTFPreferente();
                     break; 
                 case 7:
                     //Planificación por prioridad con derecho preferente
