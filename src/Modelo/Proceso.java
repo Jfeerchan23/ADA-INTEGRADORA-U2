@@ -9,7 +9,6 @@ package Modelo;
  *
  * @author fer_c
  */
-import java.util.ArrayList;
 public class Proceso {
    
    private  String proceso;
@@ -29,7 +28,14 @@ public class Proceso {
     }
 
    
-    
+    public  void setAll(String proceso, int duracion, int llegada, int prioridad){
+        this.proceso = proceso;
+        this.duracion = duracion;
+        this.llegada = llegada;
+        this.prioridad = prioridad;
+        this.tEspera = 0;
+        this.tTotal = 0;
+    }
     
     public String getProceso() {
         return proceso;

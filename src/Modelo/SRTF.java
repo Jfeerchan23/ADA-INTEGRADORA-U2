@@ -16,7 +16,7 @@ public class SRTF {
     public static ArrayList<Proceso> process = listaProcesos;
     private static ArrayList<Proceso> queueProcess = new ArrayList<Proceso>();
     private static Proceso current = null;
-    private static int totalCountTime = totalCountTime();
+    private static final int totalCountTime = totalCountTime();
     private static int durationCount;
     
     public static void SRTF(){
@@ -24,26 +24,6 @@ public class SRTF {
         //printTable(false);
         finalSRTF();
         printTable(true);
-    }
-    
-    public static void printTable(boolean full){
-        System.out.println("PLANIFICACIÓN POR SRTF (Shortest Remaining Time First)");
-        System.out.println("Proceso \tDuracion \tLlegada \tPrioridad \ttEspera \ttTotal");
-        for (int i=0; i < process.size(); i++ ){
-            System.out.println(process.get(i));    
-        }
-        if(full){
-            float promedioEspera, promedioTotal;
-            int total = 0, espera = 0 ;
-            for(Proceso pro : process){
-                total += pro.gettTotal();
-                espera += pro.gettEspera();
-            }
-            promedioEspera = (float) espera / process.size();
-            promedioTotal = (float) total / process.size();
-            System.out.println("\t\t\t\t\t\tTotales: \t"+espera+" \t\t"+total);
-            System.out.println("\t\t\t\t\t\tPromedios: \t"+promedioEspera+" \t\t"+promedioTotal);
-        }
     }
     
     private static void clock(){
@@ -189,6 +169,26 @@ public class SRTF {
         }
         cont += 1;
         return cont;
+    }
+    
+    public static void printTable(boolean full){
+        System.out.println("PLANIFICACIÓN POR SRTF (Shortest Remaining Time First)");
+        System.out.println("Proceso \tDuracion \tLlegada \tPrioridad \ttEspera \ttTotal");
+        for (int i=0; i < process.size(); i++ ){
+            System.out.println(process.get(i));    
+        }
+        if(full){
+            float promedioEspera, promedioTotal;
+            int total = 0, espera = 0 ;
+            for(Proceso pro : process){
+                total += pro.gettTotal();
+                espera += pro.gettEspera();
+            }
+            promedioEspera = (float) espera / process.size();
+            promedioTotal = (float) total / process.size();
+            System.out.println("\t\t\t\t\t\tTotales: \t"+espera+" \t\t"+total);
+            System.out.println("\t\t\t\t\t\tPromedios: \t"+promedioEspera+" \t\t"+promedioTotal);
+        }
     }
     
     private static void finalSRTF(){
