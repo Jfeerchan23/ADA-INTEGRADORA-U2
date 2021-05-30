@@ -6,17 +6,16 @@
 package Modelo;
 
 /**
- *
  * @author fer_c
  */
 public class Proceso {
-   
-   private  String proceso;
-   private  int duracion;
-   private  int llegada;
-   private int prioridad;
-   private int tEspera;
-   private  int tTotal;
+
+    private String proceso;
+    private int duracion;
+    private int llegada;
+    private int prioridad;
+    private int tEspera;
+    private int tTotal;
 
     public Proceso(String proceso, int duracion, int llegada, int prioridad) {
         this.proceso = proceso;
@@ -27,19 +26,10 @@ public class Proceso {
         this.tTotal = 0;
     }
 
-   
-    public  void setAll(String proceso, int duracion, int llegada, int prioridad){
-        this.proceso = proceso;
-        this.duracion = duracion;
-        this.llegada = llegada;
-        this.prioridad = prioridad;
-        this.tEspera = 0;
-        this.tTotal = 0;
-    }
-    
     public String getProceso() {
         return proceso;
     }
+
     public void setProceso(String proceso) {
         this.proceso = proceso;
     }
@@ -47,6 +37,7 @@ public class Proceso {
     public int getDuracion() {
         return duracion;
     }
+
     public void setDuracion(int duracion) {
         this.duracion = duracion;
     }
@@ -54,6 +45,7 @@ public class Proceso {
     public int getLlegada() {
         return llegada;
     }
+
     public void setLlegada(int llegada) {
         this.llegada = llegada;
     }
@@ -61,6 +53,7 @@ public class Proceso {
     public int getPrioridad() {
         return prioridad;
     }
+
     public void setPrioridad(int prioridad) {
         this.prioridad = prioridad;
     }
@@ -68,6 +61,7 @@ public class Proceso {
     public int gettEspera() {
         return tEspera;
     }
+
     public void settEspera(int tEspera) {
         this.tEspera = tEspera;
     }
@@ -75,19 +69,13 @@ public class Proceso {
     public int gettTotal() {
         return tTotal;
     }
+
     public void settTotal(int tTotal) {
         this.tTotal = tTotal;
     }
 
     @Override
     public String toString() {
-        return  proceso +"\t\t"+  duracion + "\t\t"+ llegada +"\t\t"+ prioridad + "\t\t"+ tEspera + "\t\t"+ tTotal;
+        return proceso + "\t\t" + duracion + "\t\t" + llegada + "\t\t" + prioridad + "\t\t" + tEspera + "\t\t" + tTotal;
     }
-
- 
-
-    
-    
-    
-    
 }

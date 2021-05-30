@@ -47,6 +47,9 @@ public class Main {
                     break;
                 case 5:
                     System.out.println("RR");
+                    System.out.println("Quantum: ");
+                    int quantum = sc.nextInt();
+                    RR.calculateRoundRobin(new ArrayList<>(listaProcesos), quantum);
                     break; 
                 case 6:
                     SRTFPreferente();
@@ -74,13 +77,7 @@ public class Main {
     }
     
     private static void resetList(){
-        listaProcesos.get(0).setAll("P1",14,8,5);
-        listaProcesos.get(1).setAll("P2",22,12,2);
-        listaProcesos.get(2).setAll("P3",8,0,8);
-        listaProcesos.get(3).setAll("P4",16,6,5);
-        listaProcesos.get(4).setAll("P5",26,24,7);
-        listaProcesos.get(5).setAll("P6",24,16,9);
-        listaProcesos.get(6).setAll("P7",12,20,4);
-        listaProcesos.get(7).setAll("P8",18,22,8);
+        listaProcesos.clear();
+        inicializar();
     }
 }
