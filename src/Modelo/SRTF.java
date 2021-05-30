@@ -39,19 +39,22 @@ public class SRTF {
         durationCount = 0;
         
         for(int i= 0; i< totalCountTime; i++){
+            System.out.println("TIEMPO: " +i);
             int arrived = isArrived(i);
             if(arrived != -1) // -1: not found; other should be the index
                 change = despachador(arrived); //TRUE: current = newProcess; FALSE: current = Still oldProcess
             if(!queueProcess.isEmpty()){ //If not empty() => has (1..*) process
                 boolean finished = isFinished(durationCount);
                 if(change || finished){ //change || some process has already finished
-                    updateCounts(durationCount, i);
+                    updateCounts(i);
                     System.out.println(durationCount);
-                    //System.out.println("que se le añada a su respectivo campo (Tespera o Ttotal) si hubiera un cambio entre current y new process");
+                    //Se añade a su respectivo campo (Tespera o Ttotal). Por cambio o finalización
                     if(finished){
                         System.out.println("Buscar nuevo proceso más chico()");
+                        newProcess(-1);
                     } else{
                         System.out.println("Cambio de current desde indice: " + arrived);
+                        newProcess(arrived);
                     }
                     //Reset values
                     durationCount = 0;
@@ -59,9 +62,36 @@ public class SRTF {
                 }
                 System.out.println("Contador: " + durationCount);
                 durationCount++;
+                System.out.println("-------- Current ------------------------------------");
+                System.out.println("Proceso \tDuracion \tLlegada \tPrioridad \ttEspera \ttTotal");
+                System.out.println(current);
             }
-            System.out.println("Contador Afuera++: " + durationCount);
-            System.out.println("=#=#=#=#==#=#=#==#=#=#==#=#=#=#=#=#=#=#=");
+            System.out.println("##########################################################################################");
+        }
+    }
+    
+    private static void newProcess(int idx){
+        System.out.println("------------ Current BF change ------------------------------");
+        System.out.println("Proceso \tDuracion \tLlegada \tPrioridad \ttEspera \ttTotal");
+        System.out.println(current);
+        System.out.println("---------------- "+idx+" ------------------------------");
+        if (idx >= 0){ // idx != -1
+            //We know that index is in QueueProcess, bc of isArrived() function
+            current = process.get(idx);
+            for (Proceso pro : queueProcess) {
+                System.out.println(pro);
+            }
+        } else {
+            int idxToDelete = findIndex();
+            queueProcess.remove(idxToDelete);
+            int lessDuration = -1;
+            for (Proceso pro : queueProcess) {
+                //-1 as wildcard OR (duration - totalTime)  {totalTime == timeThatHadHadUsedTheProcess }
+                if(lessDuration == -1 || (pro.getDuracion() - pro.gettTotal()) < lessDuration)
+                    current = pro;
+                System.out.println(pro);
+            }
+            
         }
     }
     
@@ -72,21 +102,31 @@ public class SRTF {
         return res;
     }
     
-    private static void updateCounts(int count, int iPosTime){
+    private static int findIndex(){
+        for(int i=0; i<queueProcess.size(); i++){
+            System.out.println("i: "+i);
+            if(queueProcess.get(i) == current)
+                System.out.println("Returned: "+i);
+              return i;  
+        }
+        System.out.println("Basura return");
+        return -1;
+    }
+    
+    private static void updateCounts(int iPosTime){
         int countComodin = 0;
         for (int i = 0; i<queueProcess.size(); i++){
             countComodin = queueProcess.get(i).gettTotal();
             if(queueProcess.get(i) ==  current){
                 System.out.println("Suma a TOTAL de current");
-                queueProcess.get(i).settTotal(countComodin + count);
-                System.out.println(countComodin + count);
+                queueProcess.get(i).settTotal(countComodin + durationCount);
+                System.out.println(countComodin + durationCount);
             }else{
                 System.out.println("Suma Espera de los demás");
                 int iPosArrived = queueProcess.get(i).getLlegada();
                 int waitTime = (iPosTime - iPosArrived) - countComodin;
                 queueProcess.get(i).settEspera(waitTime);
                 System.out.println(waitTime);
-                //System.out.println("TOTAL de otro: "+ queueProcess.get(i).gettEspera());
             }
         }
     }
@@ -106,17 +146,18 @@ public class SRTF {
         if(queueProcess.isEmpty()){
             queueProcess.add(process.get(indexNewProcess)); //Added to Queue if empty
             current = process.get(indexNewProcess);         //Update current with first process
-            System.out.println("### primero ###");
-            res = true;
+            System.out.println("###___ primero ___###");
+            //res = true;
         } else {
             //For current.duration and newProcess.duration, compare and execute SRTF 
-            if(current.getDuracion() > process.get(indexNewProcess).getDuracion() ){
-                System.out.println("### current > new ###");
+            //durationCount just in case it hasn't had updated
+            if(current.getDuracion() - (durationCount+current.gettTotal()) > process.get(indexNewProcess).getDuracion() ){
+                System.out.println("###___ current > new ___###");
                 res = true;
             } else {
                 //Add to queue. It will execute after currente finish
                 queueProcess.add(process.get(indexNewProcess));
-                System.out.println("### A la cola ###");
+                System.out.println("###___ A la cola ___###");
             }
         }
         return res; //If TRUE: current = new process; FALSE: current = Still old process
