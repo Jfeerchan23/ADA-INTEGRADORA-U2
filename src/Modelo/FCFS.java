@@ -65,9 +65,9 @@ public class FCFS {
         Attime = Attime/p.length;
         AQttime = AQttime/p.length;
 
-        System.out.println("El tiempo de respuesta promedio para las llamadas por orden de llegada es:"+Attime);
+        System.out.println("El tiempo TOTAL Promedio:"+Attime);
         //  System.out.printf("%.3f\n",AQttime);
-        System.out.println("El tiempo de respuesta promedio ponderado para llamar por orden de llegada es:"+AQttime);
+        System.out.println("El tiempo de ESPERA Promedio:"+AQttime);
     }
 
     // Algoritmo de clasificación (método de clasificación de burbujas)
@@ -97,8 +97,8 @@ public class FCFS {
             }
         }
         for (int k=0; k<p.length;k++){
-            p[k].zztime = p[k].finishtime-p[k].arrivetime;  // Calcula el tiempo de respuesta del proceso
-            p[k].dqzztime=p[k].zztime/p[k].servicetime;  // Calcula el tiempo de respuesta correcto del proceso
+            p[k].zztime     = p[k].finishtime - p[k].arrivetime;  // Calcula el tiempo de respuesta del proceso | El TOTAL de ejecución
+            p[k].dqzztime   = p[k].starttime - p[k].arrivetime;  // Calcula el tiempo de respuesta correcto del proceso
         }
     }
 
@@ -106,13 +106,13 @@ public class FCFS {
     // Resultado echo
     private static void print(FCFS[] p) {
         System.out.println("Llame al algoritmo por orden de llegada y luego la secuencia de operación del proceso es:");
-        System.out.println(p[0].name);
+        System.out.print(p[0].name);
         for (int k=1;k<p.length;k++){
             System.out.print("-->"+p[k].name);
         }
         System.out.println("");
         System.out.println("Información de programación específica:");
-        System.out.println("Nombre del proceso Hora de llegada Hora de servicio Hora de inicio Hora de finalización Tiempo de respuesta Tiempo de respuesta ponderado");
+        System.out.println("Proceso Llegada Servicio  Inicio   Finalización   Total   Espera");
         for(int k =0;k<p.length;k++){
             System.out.printf("%4s",p[k].name);
             System.out.printf("%10.3f",p[k].arrivetime);
